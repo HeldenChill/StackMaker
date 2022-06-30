@@ -6,14 +6,31 @@ namespace StackMaker.Core
 {
     public abstract class AbstractStack : MonoBehaviour
     {
-        public enum Type
+        public enum Status
         {
-            Add = 0,
-            Subtract = 1
+            Active = 0,
+            Deactive = 1
         }
-        private Type typeStack = Type.Add;
-        public Type TypeStack { get => typeStack; }
+        private Status state = Status.Active;
+        public Status State { 
+            get => state; 
+            protected set
+            {
+                state = value;
+            }
+        }
 
-        public abstract void Interact(Player player);
+        public virtual bool Interact(Player player)
+        {
+            if(State == Status.Active)
+            {
+                state = Status.Deactive;
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
+        }
     }
 }

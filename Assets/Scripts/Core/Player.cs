@@ -80,9 +80,10 @@ namespace StackMaker.Core
             }
 
             //NOTE: Check character reach destination or not
-            if((new Vector2(transform.localPosition.x,transform.localPosition.z) - destination).magnitude < 0.001f)
-            {               
+            if((new Vector2(transform.localPosition.x,transform.localPosition.z) - destination).magnitude < Time.fixedDeltaTime * speed)
+            {
                 //NOTE: Add Interact with Stack here
+                transform.localPosition = new Vector3(destination.x, transform.localPosition.y, destination.y);
                 if (moveDirection != Vector2Int.zero)
                 {
                     LevelManager.Inst.CurrentLevel.Data.PosToStack[destination].Interact(this);

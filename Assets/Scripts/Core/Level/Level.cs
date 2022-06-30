@@ -11,7 +11,6 @@ namespace StackMaker.Core {
         [SerializeField]
         private static float tileHeight = 0.5f;
         public static float TileHeight => tileHeight;
-        [SerializeField]
         private LevelData data;
         [SerializeField]
         private GameObject environment;
@@ -22,6 +21,10 @@ namespace StackMaker.Core {
         public LevelData Data
         {
             get => data;
+        }
+        public Transform Environment
+        {
+            get => environment.transform;
         }
         private void Awake()
         {
