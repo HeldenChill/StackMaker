@@ -14,7 +14,7 @@ namespace StackMaker.Core
         private Status state = Status.Active;
         public Status State { 
             get => state; 
-            protected set
+            set
             {
                 state = value;
             }

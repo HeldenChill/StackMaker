@@ -13,19 +13,34 @@ namespace StackMaker.Core {
         public static float TileHeight => tileHeight;
         private LevelData data;
         [SerializeField]
-        private GameObject environment;
-
+        private GameObject dynamicEnvironment;
+        [SerializeField]
+        private GameObject staticEnvironment;
         public float mapWide = 10f;
         public LayerMask stackMask;
 
+        private float mapHeight = 2f;
+        private Vector3 MapShape
+        {
+            get
+            {
+                Vector3 shape = Vector3.one * mapWide;
+                return new Vector3(shape.x, mapHeight, shape.z);
+            }
+        }
         public LevelData Data
         {
             get => data;
         }
-        public Transform Environment
+        public Transform DynamicEnvironment
         {
-            get => environment.transform;
+            get => dynamicEnvironment.transform;
         }
+        public Transform StaticEnvironment
+        {
+            get => staticEnvironment.transform;
+        }
+
         private void Awake()
         {
             data = ScriptableObject.CreateInstance("LevelData") as LevelData;
@@ -46,23 +61,26 @@ namespace StackMaker.Core {
 
         private void GetStackData()
         {
-            Collider[] stack = Physics.OverlapBox(transform.position, Vector3.one * mapWide, Quaternion.identity, stackMask);
+
+            Collider[] stack = Physics.OverlapBox(transform.localPosition, MapShape, Quaternion.identity, stackMask);
             for(int i = 0; i < stack.Length; i++)
             {
                 AbstractStack stackScript = stack[i].gameObject.GetComponent<AbstractStack>();
                 Vector2Int pos = GetPosition(stack[i].transform.localPosition);
                 if(stackScript != null)
                 {
+                    stackScript.State = AbstractStack.Status.Active;
                     data.PosToStack.Add(pos, stackScript);
-                    stack[i].transform.localPosition = new Vector3(pos.x, 0, pos.y);
-                    //TEST--
-                    //Debug.Log("Pos:" + pos + " Stack:" + stack);
-                    //------
+                    stack[i].transform.localPosition = new Vector3(pos.x, 0, pos.y);                   
                 }
                 
             }
         }
 
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawCube(transform.position,MapShape * 2);
+        }
 
         #region Editor Function
         public void NormalizeStackPosition()
