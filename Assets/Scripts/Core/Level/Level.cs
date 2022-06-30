@@ -9,7 +9,7 @@ namespace StackMaker.Core {
         [SerializeField]
         private static float tileWide = 1f;
         [SerializeField]
-        private static float tileHeight = 0.5f;
+        private static float tileHeight = 0.25f;
         public static float TileHeight => tileHeight;
         private LevelData data;
         [SerializeField]

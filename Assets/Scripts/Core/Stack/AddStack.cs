@@ -12,6 +12,12 @@ namespace StackMaker.Core
             if (!base.Interact(player))
                 return false;
             player.Stacks.Push(this);
+
+            //NOTE: Create obj represent interaction of player and stack
+            GameObject addStatusObj = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.ISUSEDADDSTACK);
+            AddObjectStatus(addStatusObj);
+
+
             gameObject.transform.parent = player.transform;
             player.transform.localPosition += new Vector3(0, Level.TileHeight, 0);
             gameObject.transform.localPosition = player.Benchmark.localPosition - new Vector3(0, Level.TileHeight * (player.Stacks.Count), 0);

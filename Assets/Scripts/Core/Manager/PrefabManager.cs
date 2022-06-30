@@ -5,7 +5,16 @@ using UnityEngine;
 using Utilitys;
 public class PrefabManager : MonoBehaviour
 {
+    //NOTE:Specific for game,remove to reuse
+    public readonly string ISUSEDSUBTRACTSTACK = "IsUsedSubtractStack";
+    public readonly string ISUSEDADDSTACK = "IsUsedAddStack";
+
     public static PrefabManager Inst;
+    [SerializeField]
+    private GameObject isUsedAddStack;
+    [SerializeField]
+    private GameObject isUsedSubtractStack;
+
     private List<string> namePools = new List<string>();
     public List<string> NamePools => namePools;
     private void Awake()
@@ -20,14 +29,20 @@ public class PrefabManager : MonoBehaviour
     public GameObject pool;
     Dictionary<string, Pool> poolData = new Dictionary<string, Pool>();
 
-    public void CreatePool(GameObject obj,string namePool)
+    private void Start()
+    {
+        //NOTE:Specific for game,remove to reuse
+        CreatePool(isUsedSubtractStack,ISUSEDSUBTRACTSTACK,Quaternion.Euler(-90,0,0));
+        CreatePool(isUsedAddStack,ISUSEDADDSTACK, Quaternion.Euler(-90, 0, 0));
+    }
+    public void CreatePool(GameObject obj,string namePool,Quaternion quaternion = default)
     {
         if (!poolData.ContainsKey(namePool))
         {
             GameObject newPool = Instantiate(pool, Vector3.zero, Quaternion.identity);
             Pool poolScript = newPool.GetComponent<Pool>();
             newPool.name = namePool;
-            poolScript.Initialize(obj);
+            poolScript.Initialize(obj,quaternion);
             poolData.Add(namePool, poolScript);
             namePools.Add(namePool);
         }   
@@ -43,13 +58,17 @@ public class PrefabManager : MonoBehaviour
         poolData[namePool].Push(obj);
     }
 
-    public GameObject PopFromPool(string namePool)
+    public GameObject PopFromPool(string namePool,GameObject obj = null)
     {
         if (!poolData.ContainsKey(namePool))
         {
-            Debug.LogError("No pool was found!!!");
-            return null;
+            if(obj == null)
+            {
+                Debug.LogError("No pool was found!!!");
+                return null;
+            }
         }
+
         return poolData[namePool].Pop();
     }
     

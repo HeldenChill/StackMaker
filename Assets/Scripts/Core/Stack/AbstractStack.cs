@@ -32,5 +32,11 @@ namespace StackMaker.Core
                 return false;
             }
         }
+
+        protected void AddObjectStatus(GameObject obj)
+        {
+            obj.transform.parent = gameObject.transform.parent;
+            obj.transform.localPosition = gameObject.transform.localPosition;
+        }
     }
 }

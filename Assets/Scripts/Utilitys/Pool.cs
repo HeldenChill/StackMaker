@@ -12,13 +12,15 @@ namespace Utilitys
 
         List<GameObject> unavailable;
         List<GameObject> available;
+        Quaternion initQuaternion;
         int numObj = 10;
-        public void Initialize(GameObject obj, int numObj = 10)
+        public void Initialize(GameObject obj,Quaternion initQuaternion = default,int numObj = 10)
         {
             this.numObj = numObj;
             this.obj = obj;
             unavailable = new List<GameObject>();
             available = new List<GameObject>();
+            this.initQuaternion = initQuaternion;
             AddObject();
         }
 
@@ -27,7 +29,7 @@ namespace Utilitys
         {
             for (int i = 0; i < numObj; i++)
             {
-                GameObject obj = Instantiate(this.obj, Vector3.zero, Quaternion.identity, mainPool.transform);
+                GameObject obj = Instantiate(this.obj, Vector3.zero, this.initQuaternion, mainPool.transform);
                 obj.SetActive(false);
                 available.Add(obj);
             }
