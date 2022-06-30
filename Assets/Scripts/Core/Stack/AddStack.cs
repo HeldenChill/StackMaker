@@ -10,9 +10,10 @@ namespace StackMaker.Core
         public override void Interact(Player player)
         {
             player.Stacks.Push(this);
-            gameObject.transform.parent = player.transform.parent;
-            gameObject.transform.localPosition = player.Benchmark.localPosition - new Vector3(0, Level.TileHeight * player.Stacks.Count, 0);
-            player.transform.localPosition += new Vector3(0, Level.TileHeight, 0);
+            gameObject.transform.parent = player.transform;
+            player.transform.localPosition += new Vector3(0, Level.TileHeight/2, 0);
+            gameObject.transform.localPosition = player.Benchmark.localPosition - new Vector3(0, Level.TileHeight/2 * (player.Stacks.Count + 1), 0);
+            
         }
     }
 }
