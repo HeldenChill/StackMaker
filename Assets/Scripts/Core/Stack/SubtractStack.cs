@@ -13,13 +13,13 @@ namespace StackMaker.Core
                 return false;
             //TO DO: Interact with player is here
             AbstractStack stack = (AbstractStack)player.Stacks.Pop();
-            PrefabManager.Inst.PushToPool(stack.gameObject, "AddStack");
+            PrefabManager.Inst.PushToPool(stack.gameObject,PrefabManager.Inst.ADDSTACK);
 
             //NOTE: Create obj represent interaction of player and stack
             GameObject addStatusObj = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.ISUSED_SUBTRACTSTACK);
             AddObjectStatus(addStatusObj);
 
-            PrefabManager.Inst.PushToPool(gameObject, "SubtractStack");
+            PrefabManager.Inst.PushToPool(gameObject, PrefabManager.Inst.SUBTRACKSTACK);
 
             player.transform.localPosition -= new Vector3(0, Level.TileHeight, 0);
             return true;

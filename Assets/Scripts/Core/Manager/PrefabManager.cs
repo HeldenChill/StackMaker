@@ -9,7 +9,10 @@ public class PrefabManager : MonoBehaviour
     public readonly string ISUSED_SUBTRACTSTACK = "IsUsedSubtractStack";
     public readonly string ISUSED_ADDSTACK = "IsUsedAddStack";
     public readonly string TALLGROUNDBLANK = "TallGroundBlank";
+    public readonly string ADDSTACK = "AddStack";
+    public readonly string SUBTRACKSTACK = "SubtractStack";
     public readonly string WALLSTACK = "WallStack";
+    public readonly string BRIDGE = "Bridge";
     private readonly int INITNUMBER_POOL_OBJECT = 50;
 
     public static PrefabManager Inst;
@@ -21,7 +24,9 @@ public class PrefabManager : MonoBehaviour
     private GameObject tallGroundBlank;
     [SerializeField]
     private GameObject wallStack;
-
+    [SerializeField]
+    private GameObject bridge;
+    //-----
     private List<string> namePools = new List<string>();
     public List<string> NamePools => namePools;
     private void Awake()
@@ -43,6 +48,7 @@ public class PrefabManager : MonoBehaviour
         CreatePool(isUsedAddStack,ISUSED_ADDSTACK, Quaternion.Euler(-90, 0, 0));
         CreatePool(tallGroundBlank, TALLGROUNDBLANK, Quaternion.Euler(-90, 0, 0),INITNUMBER_POOL_OBJECT);
         CreatePool(wallStack, WALLSTACK, Quaternion.Euler(-90, 0, 0), INITNUMBER_POOL_OBJECT);
+        CreatePool(bridge, BRIDGE, Quaternion.identity, INITNUMBER_POOL_OBJECT);
     }
     public void CreatePool(GameObject obj,string namePool,Quaternion quaternion = default,int numObj = 10)
     {
@@ -73,7 +79,7 @@ public class PrefabManager : MonoBehaviour
         {
             if(obj == null)
             {
-                Debug.LogError("No pool name: " + namePool + " was found!!!" );
+                Debug.LogError("No pool name " + namePool + " was found!!!" );
                 return null;
             }
         }
