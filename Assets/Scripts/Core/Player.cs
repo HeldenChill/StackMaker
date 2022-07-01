@@ -22,7 +22,7 @@ namespace StackMaker.Core
             {
                 Vector2Int playerPos = Level.GetPosition(transform.localPosition);
                 Vector2Int nextPos = playerPos + value;
-                if (LevelManager.Inst.CurrentLevel.Data.PosToStack.ContainsKey(nextPos))
+                if (LevelManager.Inst.CurrentLevel.Data.CheckPosStackData(nextPos))
                 {
                     moveDirection = value;
                     destination = nextPos;
@@ -86,7 +86,7 @@ namespace StackMaker.Core
                 transform.localPosition = new Vector3(destination.x, transform.localPosition.y, destination.y);
                 if (moveDirection != Vector2Int.zero)
                 {
-                    LevelManager.Inst.CurrentLevel.Data.PosToStack[destination].Interact(this);
+                    LevelManager.Inst.CurrentLevel.Data.GetPosStackData(destination).Value.Interact(this);
                 }
                 //NOTE: Proverty check move direction and setup destination
                 SetMoveDirAndDestination = moveDirection; 

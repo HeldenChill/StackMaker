@@ -11,12 +11,28 @@ namespace StackMaker.Core
             Active = 0,
             Deactive = 1
         }
+        public enum ModelType
+        {
+            High = 0,
+            Low = 1
+        }
+
         private Status state = Status.Active;
+        private ModelType type = ModelType.High;
+
         public Status State { 
             get => state; 
             set
             {
                 state = value;
+            }
+        }
+        public ModelType Type
+        {
+            get => type;
+            set
+            {
+                type = value;
             }
         }
 
