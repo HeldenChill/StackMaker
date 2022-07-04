@@ -62,12 +62,21 @@ namespace StackMaker.Core {
                         endPos = tile.Key;
                     }
                 }
+                else if(value == 2)
+                {
+                    
+                    if(tile.Value is CrossAddStack)
+                    {
+                        CrossAddStack crossAddStack = (CrossAddStack)tile.Value;
+                        List<Vector2Int> aroundTiles = CheckAroundTile(tile.Key);
+                        crossAddStack.SetStackDirection(aroundTiles[0], aroundTiles[1]);
+                    }
+                }
             }
         }
 
         private int CheckAroundMaxMin(Vector2Int pos) //Setup Max Min in this
         {
-            int value = 0;
             if (pos.x > max.x)
             {
                 max.Set(pos.x, max.y);
@@ -87,14 +96,21 @@ namespace StackMaker.Core {
                 min.Set(min.x, pos.y);
             }
 
+            return CheckAroundTile(pos).Count;
+        }
+
+        private List<Vector2Int> CheckAroundTile(Vector2Int pos)
+        {
+            List<Vector2Int> res = new List<Vector2Int>();
             for (int i = 0; i < DIRECTION.Length; i++)
-            {                                      
+            {
                 if (road.ContainsKey(pos + DIRECTION[i]))
                 {
-                    value += 1;
+                    res.Add(DIRECTION[i]);
                 }
             }
-            return value;
+
+            return res;
         }
 
         public void ConstuctRoom()

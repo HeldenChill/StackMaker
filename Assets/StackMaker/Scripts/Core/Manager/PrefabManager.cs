@@ -23,6 +23,8 @@ public class PrefabManager : MonoBehaviour
     [SerializeField]
     private GameObject tallGroundBlank;
     [SerializeField]
+    private GameObject addStack;
+    [SerializeField]
     private GameObject wallStack;
     [SerializeField]
     private GameObject bridge;
@@ -46,6 +48,7 @@ public class PrefabManager : MonoBehaviour
         //NOTE:Specific for game,remove to reuse
         CreatePool(isUsedSubtractStack,ISUSED_SUBTRACTSTACK,Quaternion.Euler(-90,0,0));
         CreatePool(isUsedAddStack,ISUSED_ADDSTACK, Quaternion.Euler(-90, 0, 0));
+        CreatePool(addStack,ADDSTACK, Quaternion.Euler(-90, 0, 0));
         CreatePool(tallGroundBlank, TALLGROUNDBLANK, Quaternion.Euler(-90, 0, 0),INITNUMBER_POOL_OBJECT);
         CreatePool(wallStack, WALLSTACK, Quaternion.Euler(-90, 0, 0), INITNUMBER_POOL_OBJECT);
         CreatePool(bridge, BRIDGE, Quaternion.identity, INITNUMBER_POOL_OBJECT);

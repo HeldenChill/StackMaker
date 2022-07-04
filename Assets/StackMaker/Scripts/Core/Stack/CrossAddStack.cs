@@ -1,3 +1,4 @@
+using StackMaker.Management;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,13 +20,14 @@ namespace StackMaker.Core
             Right = 0,
             Up = 1,
             Left = 2,
-            Down = 3
-
+            Down = 3,
+            None = 4
         }
-
-        public StackDirection Direction1;
-        public StackDirection Direction2;
         public Transform Indicator;
+        public GameObject AddStackModel;
+
+        StackDirection Direction1;
+        StackDirection Direction2;
         private void Start()
         {
             //TODO: Rotate the cross stack depend on its direction
@@ -33,12 +35,46 @@ namespace StackMaker.Core
         }
         public override bool Interact(Player player)
         {
+            SetPlayerDirection(player);
+            AddStackModel.SetActive(false);
             if (!base.Interact(player))
                 return false;
-            SetPlayerDirection(player);         
+
+            GameObject addStack = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.ADDSTACK);
+            addStack.transform.localScale = Vector3.one;
+            addStack.transform.parent = player.transform;
+            player.transform.localPosition += new Vector3(0, Level.TileHeight, 0);
+            addStack.transform.localPosition = player.Benchmark.localPosition - new Vector3(0, Level.TileHeight * (player.Stacks.Count), 0);
             return true;
         }
+        public void SetStackDirection(Vector2Int dir1,Vector2Int dir2)
+        {
+            Direction1 = Vector2Direction(dir1);
+            Direction2 = Vector2Direction(dir2);
+            SetRotationIndicator();
+        }
 
+        private StackDirection Vector2Direction(Vector2Int dir)
+        {
+            if(dir == Vector2Int.right)
+            {
+                return StackDirection.Right;
+            }
+            else if(dir == Vector2Int.up)
+            {
+                return StackDirection.Up;
+            }
+            else if (dir == Vector2Int.left)
+            {
+                return StackDirection.Left;
+
+            }
+            else if (dir == Vector2Int.down)
+            {
+                return StackDirection.Down;
+            }
+            return StackDirection.None;
+        }
         private void SetPlayerDirection(Player player)
         {
             if (player.MoveDirection + DIRECTION[(int)Direction1] == Vector2Int.zero)
