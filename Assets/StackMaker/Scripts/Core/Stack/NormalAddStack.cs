@@ -10,12 +10,13 @@ namespace StackMaker.Core
         {
             if (!base.Interact(player))
                 return false;
-            player.Stacks.Push(this);
-           
+
+            player.TakeStack(this);
+   
             gameObject.transform.localScale = Vector3.one;
             gameObject.transform.parent = player.transform;
             player.transform.localPosition += new Vector3(0, Level.TileHeight, 0);
-            gameObject.transform.localPosition = player.Benchmark.localPosition - new Vector3(0, Level.TileHeight * (player.Stacks.Count), 0);
+            gameObject.transform.localPosition = player.Benchmark.localPosition - new Vector3(0, Level.TileHeight * (player.NumOfStack), 0);
             return true;
         }
     }

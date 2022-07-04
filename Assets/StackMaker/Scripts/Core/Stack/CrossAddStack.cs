@@ -41,10 +41,12 @@ namespace StackMaker.Core
                 return false;
 
             GameObject addStack = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.ADDSTACK);
+            player.TakeStack(addStack.gameObject.GetComponent<AbstractStack>());
+
             addStack.transform.localScale = Vector3.one;
             addStack.transform.parent = player.transform;
             player.transform.localPosition += new Vector3(0, Level.TileHeight, 0);
-            addStack.transform.localPosition = player.Benchmark.localPosition - new Vector3(0, Level.TileHeight * (player.Stacks.Count), 0);
+            addStack.transform.localPosition = player.Benchmark.localPosition - new Vector3(0, Level.TileHeight * (player.NumOfStack), 0);
             return true;
         }
         public void SetStackDirection(Vector2Int dir1,Vector2Int dir2)

@@ -12,7 +12,7 @@ namespace StackMaker.Core
             if (!base.Interact(player))
                 return false;
             //TO DO: Interact with player is here
-            AbstractStack stack = (AbstractStack)player.Stacks.Pop();
+            AbstractStack stack = (AbstractStack)player.ReturnStack();
             PrefabManager.Inst.PushToPool(stack.gameObject,PrefabManager.Inst.ADDSTACK);
 
             //NOTE: Create obj represent interaction of player and stack

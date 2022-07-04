@@ -3,6 +3,7 @@ using UnityEngine;
 namespace StackMaker.Core
 {
     using Management;
+    using Utilitys;
     using System.Collections;
 
     public class Player : MonoBehaviour
@@ -12,10 +13,15 @@ namespace StackMaker.Core
         float speed = 5;
         [SerializeField]
         Transform benchmark;
+        [SerializeField]
+        Transform cameraLookAt;
+        [SerializeField]
+        AnimationModule Anim;
         public Transform Benchmark => benchmark;
         Vector2Int moveDirection = Vector2Int.zero;   
         Vector2Int destination;
-        public Stack Stacks = new Stack();
+        private Stack stacks = new Stack();
+        
         Vector2Int SetMoveDirAndDestination
         {
             set
@@ -33,8 +39,11 @@ namespace StackMaker.Core
                     return;
                 }
             }
+        }   
+        public int NumOfStack
+        {
+            get => stacks.Count;
         }
-
         public Vector2Int MoveDirection
         {
             get => moveDirection;
@@ -43,9 +52,17 @@ namespace StackMaker.Core
                 SetMoveDirAndDestination = value;
             }
         }
+
+        //Temp Variable
+        int animationState = 0;
+
         void Start()
         {
             destination = new Vector2Int((int)transform.localPosition.x,(int)transform.localPosition.z);
+        }
+        private void OnEnable()
+        {
+            Anim.UpdateEventAnimationState += EventUpdate;
         }
 
         // Update is called once per frame
@@ -77,7 +94,23 @@ namespace StackMaker.Core
                 SetMoveDirAndDestination = moveDirection; 
             }
         }
+        public void TakeStack(AbstractStack stack)
+        {
+            stacks.Push(stack);
+            cameraLookAt.transform.position -= Vector3.up * Level.TileHeight;
+            if(animationState != 1)
+            {
+                animationState = 1;
+                Anim.SetState(Anim.PLAYER_ANIM_STATE, animationState);                
+            }
+            
+        }
 
+        public AbstractStack ReturnStack()
+        {
+            cameraLookAt.transform.position += Vector3.up * Level.TileHeight;
+            return (AbstractStack)stacks.Pop();
+        }
         private void GetPlayerInput()
         {
             if (moveDirection != Vector2.zero)
@@ -104,5 +137,21 @@ namespace StackMaker.Core
             //--
         }
 
+        private void EventUpdate(string code)
+        {
+            if (code.IndexOf("EndAnimation") != -1)
+            {
+                if(code.IndexOf("TakeStack") != -1)
+                {
+                    animationState = 0;
+                    Anim.SetState(Anim.PLAYER_ANIM_STATE, animationState);
+                }
+            }
+        }
+
+        private void OnDisable()
+        {
+            Anim.UpdateEventAnimationState -= EventUpdate;
+        }
     }
 }
