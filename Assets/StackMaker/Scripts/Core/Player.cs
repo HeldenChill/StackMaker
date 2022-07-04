@@ -34,6 +34,15 @@ namespace StackMaker.Core
                 }
             }
         }
+
+        public Vector2Int MoveDirection
+        {
+            get => moveDirection;
+            set
+            {
+                SetMoveDirAndDestination = value;
+            }
+        }
         void Start()
         {
             destination = new Vector2Int((int)transform.localPosition.x,(int)transform.localPosition.z);
@@ -42,31 +51,7 @@ namespace StackMaker.Core
         // Update is called once per frame
         void Update()
         {
-            if (moveDirection != Vector2.zero)
-                return;
-            //Test Input
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                SetMoveDirAndDestination = Vector2Int.left;
-            }
-            else if (Input.GetKeyDown(KeyCode.W))
-            {
-                SetMoveDirAndDestination = Vector2Int.up;
-
-            }
-            else if (Input.GetKeyDown(KeyCode.D))
-            {
-                SetMoveDirAndDestination = Vector2Int.right;
-
-            }
-            else if (Input.GetKeyDown(KeyCode.S))
-            {
-                SetMoveDirAndDestination = Vector2Int.down;
-
-            }
-            //--
-
-
+            GetPlayerInput();
         }
 
         private void FixedUpdate()
@@ -92,5 +77,32 @@ namespace StackMaker.Core
                 SetMoveDirAndDestination = moveDirection; 
             }
         }
+
+        private void GetPlayerInput()
+        {
+            if (moveDirection != Vector2.zero)
+                return;
+            //Test Input
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                SetMoveDirAndDestination = Vector2Int.left;
+            }
+            else if (Input.GetKeyDown(KeyCode.W))
+            {
+                SetMoveDirAndDestination = Vector2Int.up;
+
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                SetMoveDirAndDestination = Vector2Int.right;
+
+            }
+            else if (Input.GetKeyDown(KeyCode.S))
+            {
+                SetMoveDirAndDestination = Vector2Int.down;
+            }
+            //--
+        }
+
     }
 }

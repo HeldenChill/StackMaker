@@ -8,6 +8,7 @@ namespace StackMaker.Core {
         private readonly float POSY_TALLGROUND = -2.55f;
         private readonly float POSY_STACK = 0.395f;
         private readonly float POSY_BRIDGE = -0.05f;
+        private readonly int ADDROOM_SIZE = 1;
         private readonly Quaternion HORIZONTAL_BRIDGE = Quaternion.Euler(-90, 90, 0);
         private readonly Quaternion VERTICAL_BRIDGE = Quaternion.Euler(-90, 0, 0);
 
@@ -100,14 +101,14 @@ namespace StackMaker.Core {
         {
             if(typeRoom == TypeRoom.Add)
             {
-                for (int x = min.x - 1; x <= max.x + 1; x++)
+                for (int x = min.x - ADDROOM_SIZE; x <= max.x + ADDROOM_SIZE; x++)
                 {
-                    for(int y = min.y - 1; y <= max.y + 1; y++)
+                    for(int y = min.y - ADDROOM_SIZE; y <= max.y + ADDROOM_SIZE; y++)
                     {
                         Vector2Int pos = new Vector2Int(x, y);
 
                         GameObject tallGroundBlank = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.TALLGROUNDBLANK);
-                        tallGroundBlank.transform.parent = level.StaticEnvironment.transform;
+                        tallGroundBlank.transform.parent = level.StaticEnvironment;
                         tallGroundBlank.transform.localPosition = new Vector3(pos.x, POSY_TALLGROUND, pos.y);
                         level.Data.PosToTallGround.Add(pos, tallGroundBlank);
 
@@ -116,7 +117,7 @@ namespace StackMaker.Core {
                             continue;
 
                         GameObject wallStack = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.WALLSTACK);
-                        wallStack.transform.parent = level.StaticEnvironment.transform;
+                        wallStack.transform.parent = level.StaticEnvironment;
                         wallStack.transform.localPosition = new Vector3(pos.x, POSY_STACK, pos.y);
                         level.Data.PosToWall.Add(pos, wallStack);
                     }
@@ -131,7 +132,7 @@ namespace StackMaker.Core {
                         Vector2Int pos = v.Key;
                         GameObject bridge = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.BRIDGE);
                         
-                        for (int i = -1; i <= 1; i++)
+                        for (int i = -ADDROOM_SIZE; i <= ADDROOM_SIZE; i++)
                         {
                             if (pos == startPos || pos == endPos)
                                 continue;
@@ -162,7 +163,7 @@ namespace StackMaker.Core {
                         Vector2Int pos = v.Key;
                         GameObject bridge = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.BRIDGE);
 
-                        for (int i = -1; i <= 1; i++)
+                        for (int i = -ADDROOM_SIZE; i <= ADDROOM_SIZE; i++)
                         {
                             if (pos == startPos || pos == endPos)
                                 continue;

@@ -7,9 +7,9 @@ namespace StackMaker.Core {
     public class Level : MonoBehaviour
     {
         [SerializeField]
-        private static float tileWide = 1f;
+        private const float tileWide = 1f;
         [SerializeField]
-        private static float tileHeight = 0.25f;
+        private const float tileHeight = 0.25f;
         public static float TileHeight => tileHeight;
         private LevelData data;
         [SerializeField]
@@ -67,15 +67,15 @@ namespace StackMaker.Core {
             Collider[] stack = Physics.OverlapBox(transform.localPosition, MapShape, Quaternion.identity, stackMask);
             for(int i = 0; i < stack.Length; i++)
             {
+                stack[i].transform.parent = DynamicEnvironment;
                 AbstractStack stackScript = stack[i].gameObject.GetComponent<AbstractStack>();
                 Vector2Int pos = GetPosition(stack[i].transform.localPosition);
-                if(stackScript != null)
+                if (stackScript != null)
                 {
                     stackScript.State = AbstractStack.Status.Active;
                     data.AddPosStackData(pos, stackScript);
-                    stack[i].transform.localPosition = new Vector3(pos.x, 0, pos.y);                   
+                    stack[i].transform.localPosition = new Vector3(pos.x, 0, pos.y);
                 }
-                
             }
         }
 
