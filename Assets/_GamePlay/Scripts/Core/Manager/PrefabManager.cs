@@ -15,6 +15,8 @@ public class PrefabManager : MonoBehaviour
     public readonly string DES_SUBTRACTSTACK = "DesSubtractStack";
     public readonly string WALLSTACK = "WallStack";
     public readonly string BRIDGE = "Bridge";
+    public readonly string END_POSITION = "EndPosition";
+
     private readonly int INITNUMBER_POOL_OBJECT = 50;
 
     public static PrefabManager Inst;
@@ -29,9 +31,15 @@ public class PrefabManager : MonoBehaviour
     [SerializeField]
     private GameObject subtractStack;
     [SerializeField]
+    private GameObject crossAddStack;
+    [SerializeField]
+    private GameObject desSubtractStack;
+    [SerializeField]
     private GameObject wallStack;
     [SerializeField]
     private GameObject bridge;
+    [SerializeField]
+    private GameObject endPosition;
     //-----
     private List<string> namePools = new List<string>();
     public List<string> NamePools => namePools;
@@ -45,6 +53,10 @@ public class PrefabManager : MonoBehaviour
             CreatePool(isUsedAddStack, ISUSED_ADDSTACK, Quaternion.Euler(-90, 0, 0));
             CreatePool(addStack, ADDSTACK, Quaternion.Euler(-90, 0, 0));
             CreatePool(subtractStack, SUBTRACKSTACK, Quaternion.Euler(-90, 0, 0));
+            CreatePool(crossAddStack, CROSS_ADDSTACK, Quaternion.Euler(-90, 0, 0));
+            CreatePool(desSubtractStack, DES_SUBTRACTSTACK, Quaternion.Euler(-90, 0, 0));
+
+            CreatePool(endPosition, END_POSITION, Quaternion.identity, 1);
             CreatePool(tallGroundBlank, TALLGROUNDBLANK, Quaternion.Euler(-90, 0, 0), INITNUMBER_POOL_OBJECT);
             CreatePool(wallStack, WALLSTACK, Quaternion.Euler(-90, 0, 0), INITNUMBER_POOL_OBJECT);
             CreatePool(bridge, BRIDGE, Quaternion.identity, INITNUMBER_POOL_OBJECT);

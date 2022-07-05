@@ -61,6 +61,9 @@ MonoBehaviour:
   isUsedSubtractStack: {fileID: 1022993237182627, guid: d04d393ce76715f498cdd8615b8940a4, type: 3}
   tallGroundBlank: {fileID: 1186571016788469, guid: 50c7535320f786d4286d60ca5630d31b, type: 3}
   addStack: {fileID: 1531101969777205, guid: 8aad5fca35890fd4389dabb982d52236, type: 3}
+  subtractStack: {fileID: 1377948116806254, guid: d755cee1094bb6a48ab2a168d33fd112, type: 3}
+  crossAddStack: {fileID: 8291636281783682481, guid: d1040a7c81c7b19488f235d3ee93cc39, type: 3}
+  desSubtractStack: {fileID: 1382609396003037, guid: 295db39e1f72aa54580c0b7e0b02aadd, type: 3}
   wallStack: {fileID: 4460744202472612684, guid: 17ca0dd4a59370a488cc01b214586414, type: 3}
   bridge: {fileID: 1933373343753681, guid: 14205a6528da1894cbf0034337e8e854, type: 3}
   pool: {fileID: 5308769767703339281, guid: 1e56b0cda3c8d464ca2a871161590788, type: 3}

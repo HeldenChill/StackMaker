@@ -5,6 +5,12 @@ using UnityEngine;
 namespace StackMaker.Core {
     public class Room
     {
+        public enum TypeRoom
+        {
+            Add = 0,
+            Subtract = 1
+        }
+
         private readonly float POSY_TALLGROUND = -2.55f;
         private readonly float POSY_STACK = 0.395f;
         private readonly float POSY_BRIDGE = -0.05f;
@@ -20,12 +26,12 @@ namespace StackMaker.Core {
         private Vector2Int min = new Vector2Int(int.MaxValue, int.MaxValue);
         private TypeRoom typeRoom;
         private Level level;
-        bool isHorizontal;
-        public enum TypeRoom
-        {
-            Add = 0,
-            Subtract = 1
-        }
+        private bool isHorizontal;
+
+        private DesSubtractStack DesStack = null;
+        private Vector2Int desStackDirection = Vector2Int.zero;
+        public Vector2Int DesStackDirection => desStackDirection;
+        
 
         private Dictionary<Vector2Int, AbstractStack> road;
         
@@ -46,7 +52,9 @@ namespace StackMaker.Core {
 
             foreach(var tile in road)
             {
-                int value = CheckAroundMaxMin(tile.Key);
+                List<Vector2Int> aroundTiles = CheckAroundMaxMin(tile.Key);
+                int value = aroundTiles.Count;
+
                 if(value == 0)
                 {
                     Debug.LogError("Road Error:" + tile.Key);
@@ -61,65 +69,33 @@ namespace StackMaker.Core {
                     {
                         endPos = tile.Key;
                     }
+
+                    if(tile.Value is DesSubtractStack)
+                    {
+                        desStackDirection = -aroundTiles[0];
+                        DesStack = (DesSubtractStack)tile.Value;
+                        Debug.Log(desStackDirection);
+                    }
                 }
                 else if(value == 2)
                 {
                     
                     if(tile.Value is CrossAddStack)
                     {
-                        CrossAddStack crossAddStack = (CrossAddStack)tile.Value;
-                        List<Vector2Int> aroundTiles = CheckAroundTile(tile.Key);
+                        CrossAddStack crossAddStack = (CrossAddStack)tile.Value;        
                         crossAddStack.SetStackDirection(aroundTiles[0], aroundTiles[1]);
                     }
                 }
             }
         }
-
-        private int CheckAroundMaxMin(Vector2Int pos) //Setup Max Min in this
-        {
-            if (pos.x > max.x)
-            {
-                max.Set(pos.x, max.y);
-            }
-
-            if (pos.y > max.y)
-            {
-                max.Set(max.x, pos.y);
-            }
-            if (pos.x < min.x)
-            {
-                min.Set(pos.x, min.y);
-            }
-
-            if (pos.y < min.y)
-            {
-                min.Set(min.x, pos.y);
-            }
-
-            return CheckAroundTile(pos).Count;
-        }
-
-        private List<Vector2Int> CheckAroundTile(Vector2Int pos)
-        {
-            List<Vector2Int> res = new List<Vector2Int>();
-            for (int i = 0; i < DIRECTION.Length; i++)
-            {
-                if (road.ContainsKey(pos + DIRECTION[i]))
-                {
-                    res.Add(DIRECTION[i]);
-                }
-            }
-
-            return res;
-        }
-
         public void ConstuctRoom()
         {
-            if(typeRoom == TypeRoom.Add)
+            //NOTE:Construct Add Room
+            if (typeRoom == TypeRoom.Add)
             {
                 for (int x = min.x - ADDROOM_SIZE; x <= max.x + ADDROOM_SIZE; x++)
                 {
-                    for(int y = min.y - ADDROOM_SIZE; y <= max.y + ADDROOM_SIZE; y++)
+                    for (int y = min.y - ADDROOM_SIZE; y <= max.y + ADDROOM_SIZE; y++)
                     {
                         Vector2Int pos = new Vector2Int(x, y);
 
@@ -131,7 +107,7 @@ namespace StackMaker.Core {
                         {
                             level.Data.PosToTallGround.Add(pos, tallGroundBlank);
                         }
-                        
+
 
                         //NOTE: Construct Wall Stack
                         if (level.Data.PosToStack.ContainsKey(pos))
@@ -145,19 +121,19 @@ namespace StackMaker.Core {
                         {
                             level.Data.PosToWall.Add(pos, wallStack);
                         }
-                        
+
                     }
                 }
             }
-            else if(typeRoom == TypeRoom.Subtract)
+            else if (typeRoom == TypeRoom.Subtract)
             {
                 if (isHorizontal)
                 {
-                    foreach(var v in road)
+                    foreach (var v in road)
                     {
                         Vector2Int pos = v.Key;
                         GameObject bridge = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.BRIDGE);
-                        
+
                         for (int i = -ADDROOM_SIZE; i <= ADDROOM_SIZE; i++)
                         {
                             if (pos == startPos || pos == endPos)
@@ -171,16 +147,16 @@ namespace StackMaker.Core {
                             }
 
                             if (level.Data.PosToWall.ContainsKey(posCheck))
-                            {                                
+                            {
                                 PrefabManager.Inst.PushToPool(level.Data.PosToWall[posCheck], PrefabManager.Inst.WALLSTACK);
                                 level.Data.PosToWall.Remove(posCheck);
                             }
                         }
                         bridge.transform.parent = level.StaticEnvironment.transform;
                         bridge.transform.localRotation = HORIZONTAL_BRIDGE;
-                        bridge.transform.localPosition = new Vector3(pos.x,POSY_BRIDGE, pos.y);
+                        bridge.transform.localPosition = new Vector3(pos.x, POSY_BRIDGE, pos.y);
                     }
-                    
+
                 }
                 else
                 {
@@ -211,8 +187,78 @@ namespace StackMaker.Core {
                         bridge.transform.localPosition = new Vector3(pos.x, POSY_BRIDGE, pos.y);
                     }
                 }
+
+                if (DesStackDirection != Vector2Int.zero)
+                {
+                    Vector3 desDirectionAdd = new Vector3(DesStackDirection.x, 0, DesStackDirection.y);
+                    GameObject obj = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.END_POSITION);
+                    obj.transform.localRotation = GetQuaternionFromDesDirection();
+                    obj.transform.parent = level.StaticEnvironment;
+                    obj.transform.localPosition = DesStack.gameObject.transform.localPosition - desDirectionAdd * 2f; 
+                    obj.transform.localPosition = new Vector3(obj.transform.localPosition.x, POSY_TALLGROUND, obj.transform.localPosition.z);
+
+                    level.SetWinPos(obj.GetComponent<WinPosition>());
+                }
             }
-            
+
+        }
+        private List<Vector2Int> CheckAroundMaxMin(Vector2Int pos) //Setup Max Min in this
+        {
+            if (pos.x > max.x)
+            {
+                max.Set(pos.x, max.y);
+            }
+
+            if (pos.y > max.y)
+            {
+                max.Set(max.x, pos.y);
+            }
+            if (pos.x < min.x)
+            {
+                min.Set(pos.x, min.y);
+            }
+
+            if (pos.y < min.y)
+            {
+                min.Set(min.x, pos.y);
+            }
+
+            return CheckAroundTile(pos);
+        }
+
+        private List<Vector2Int> CheckAroundTile(Vector2Int pos)
+        {
+            List<Vector2Int> res = new List<Vector2Int>();
+            for (int i = 0; i < DIRECTION.Length; i++)
+            {
+                if (road.ContainsKey(pos + DIRECTION[i]))
+                {
+                    res.Add(DIRECTION[i]);
+                }
+            }
+
+            return res;
+        }
+
+        private Quaternion GetQuaternionFromDesDirection()
+        {
+            if (DesStackDirection == Vector2Int.up)
+            {
+                return Quaternion.Euler(0, 0, 0);
+            }
+            else if (DesStackDirection == Vector2Int.down)
+            {
+                return Quaternion.Euler(0, 180, 0);
+            }
+            else if (DesStackDirection == Vector2Int.right)
+            {
+                return Quaternion.Euler(0, 90, 0);
+            }
+            else if (DesStackDirection == Vector2Int.left)
+            {
+                return Quaternion.Euler(0, 270, 0);
+            }
+            return Quaternion.identity;
         }
     }
 }

@@ -6,6 +6,7 @@ namespace StackMaker.Core
 {
     public class DesSubtractStack : SubtractStack
     {
+        
         public override bool Interact(Player player)
         {
             if (!base.Interact(player))

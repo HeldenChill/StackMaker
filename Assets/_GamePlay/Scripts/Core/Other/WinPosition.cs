@@ -12,7 +12,7 @@ namespace StackMaker.Core
         GameObject chestOpen;       
         public void OnGameWin()
         {
-
+            Debug.Log("GAME WIN");
         }
     }
 }
