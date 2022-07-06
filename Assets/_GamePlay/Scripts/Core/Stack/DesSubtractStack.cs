@@ -11,6 +11,7 @@ namespace StackMaker.Core
         {
             if (!base.Interact(player))
                 return false;
+            player.WinLevel();
             return true;
         }
     }

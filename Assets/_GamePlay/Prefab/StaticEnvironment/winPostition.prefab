@@ -22217,11 +22217,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4157892317022374}
-  - component: {fileID: 4021051471931822576}
   - component: {fileID: 4021051471931822591}
   m_Layer: 0
   m_Name: winPostition
-  m_TagString: Destination
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22307,19 +22306,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
---- !u!65 &4021051471931822576
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1377060364527856}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.0254936, y: 7.5363674, z: 0.63985825}
-  m_Center: {x: -0.030412674, y: 4.942046, z: 2.1204815}
 --- !u!114 &4021051471931822591
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,9 +10,9 @@ namespace StackMaker.Core
         // Start is called before the first frame update       
         GameObject chestClose;
         GameObject chestOpen;       
-        public void OnGameWin()
+        public void WinGame()
         {
-            Debug.Log("GAME WIN");
+            Debug.Log("GAME WIN POSITION");
         }
     }
 }

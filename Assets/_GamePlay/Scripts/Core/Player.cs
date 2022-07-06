@@ -32,7 +32,7 @@ namespace StackMaker.Core
             {
                 Vector2Int playerPos = Level.GetPosition(transform.localPosition);
                 Vector2Int nextPos = playerPos + value;
-                if (LevelManager.Inst.CurrentLevel.Data.CheckPosStackData(nextPos))
+                if (LevelManager.Inst.CurrentLevel.Data.ContainsKeyStackData(nextPos))
                 {
                     moveDirection = value;
                     destination = nextPos;
@@ -67,7 +67,6 @@ namespace StackMaker.Core
         private void OnEnable()
         {
             Anim.UpdateEventAnimationState += EventUpdate;
-            collide.OnPlayerReachDes += WinLevel;
         }
 
         // Update is called once per frame
@@ -107,7 +106,27 @@ namespace StackMaker.Core
                 cameraLookAt.transform.localPosition += Vector3.up * Level.TileHeight;
             }
         }
+        public void WinLevel()
+        {
+            animationState = 2;
+            Anim.SetState(Anim.PLAYER_ANIM_STATE, animationState);
 
+            directionToWin = moveDirection;
+            RemoveAllStack();
+            gameObject.transform.localPosition += new Vector3(directionToWin.x, 0, directionToWin.y) * 4;
+            moveDirection = Vector2Int.zero;
+            //TEST: Debug.Log(directionToWin);
+            OnPlayerReachDes?.Invoke();
+        }
+
+        public void ResetPlayer()
+        {
+            animationState = 0;
+            Anim.SetState(Anim.PLAYER_ANIM_STATE, animationState);
+            Vector2Int moveDirection = Vector2Int.zero;
+            destination = Vector2Int.zero;
+            directionToWin = Vector2Int.zero;
+        }
         private void UpdateMoveDirection()
         {
             if (moveDirection != Vector2Int.zero)
@@ -169,27 +188,10 @@ namespace StackMaker.Core
             }
         }
 
-        Vector2Int directionToWin = Vector2Int.zero;
-        private void WinLevel()
-        {
-            animationState = 2;
-            Anim.SetState(Anim.PLAYER_ANIM_STATE, animationState);
-
-            directionToWin = moveDirection;
-            RemoveAllStack();
-            gameObject.transform.localPosition += new Vector3(directionToWin.x, 0, directionToWin.y) * 4;
-            moveDirection = Vector2Int.zero;
-            //TEST: Debug.Log(directionToWin);
-            OnPlayerReachDes?.Invoke();
-            
-        }
-
-
-
+        Vector2Int directionToWin = Vector2Int.zero;       
         private void OnDisable()
         {
             Anim.UpdateEventAnimationState -= EventUpdate;
-            collide.OnPlayerReachDes -= WinLevel;
         }
 
         

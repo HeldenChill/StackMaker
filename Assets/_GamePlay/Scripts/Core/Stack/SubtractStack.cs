@@ -17,6 +17,7 @@ namespace StackMaker.Core
 
             //NOTE: Create obj represent interaction of player and stack
             GameObject addStatusObj = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.ISUSED_SUBTRACTSTACK);
+            LevelManager.Inst.CurrentLevel.Data.IsUsedSubtractStacks.Add(addStatusObj);
             AddObjectStatus(addStatusObj);
 
             PrefabManager.Inst.PushToPool(gameObject, PrefabManager.Inst.SUBTRACKSTACK);

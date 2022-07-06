@@ -56,6 +56,11 @@ namespace StackMaker.Core
             SetRotationIndicator();
         }
 
+        public void ResetStack()
+        {
+            AddStackModel.SetActive(true);
+        }
+
         private StackDirection Vector2Direction(Vector2Int dir)
         {
             if(dir == Vector2Int.right)

@@ -17,13 +17,16 @@ namespace StackMaker.Core.Data
         private readonly Vector2Int[] DIRECTION = new Vector2Int[] { Vector2Int.right, Vector2Int.up, Vector2Int.left, Vector2Int.down };
         [SerializeField]
         private Dictionary<Vector2Int, AbstractStack> posToStack = new Dictionary<Vector2Int, AbstractStack>();
-        //Test
         public Dictionary<Vector2Int, AbstractStack> PosToStack => posToStack;
         public Dictionary<Vector2Int, GameObject> PosToTallGround = new Dictionary<Vector2Int, GameObject>();
         public Dictionary<Vector2Int, GameObject> PosToWall = new Dictionary<Vector2Int, GameObject>();
+        public GameObject EndPos = null;
+        public List<GameObject> Bridges = new List<GameObject>();
+        public List<GameObject> IsUsedAddStacks = new List<GameObject>();
+        public List<GameObject> IsUsedSubtractStacks = new List<GameObject>();
+
         public List<Room> addRooms = new List<Room>();
         public List<Room> subtractRooms = new List<Room>();
-
 
         private List<Vector2Int> addStack = new List<Vector2Int>();
         private List<Vector2Int> subtrackStack = new List<Vector2Int>();
@@ -48,11 +51,85 @@ namespace StackMaker.Core.Data
             return new KeyValuePair<Vector2Int, AbstractStack>(key,posToStack[key]);
         }
 
-        public bool CheckPosStackData(Vector2Int key)
+        public bool ContainsKeyStackData(Vector2Int key)
         {
             return posToStack.ContainsKey(key);
         }
               
+        public void Reset()
+        {
+            //Stack,TallGround,Wall,EndPosition,Bridge,IsUsedAddStack,IsUsedSubtractStack;
+            if(EndPos != null)
+            {
+                PrefabManager.Inst.PushToPool(EndPos, PrefabManager.Inst.END_POSITION);
+            }
+            
+            foreach(var tallGround in PosToTallGround)
+            {
+                PrefabManager.Inst.PushToPool(tallGround.Value, PrefabManager.Inst.TALLGROUNDBLANK);
+            }
+            PosToTallGround = new Dictionary<Vector2Int, GameObject>();
+
+            foreach(var wall in PosToWall)
+            {
+                PrefabManager.Inst.PushToPool(wall.Value, PrefabManager.Inst.WALLSTACK);
+            }
+            PosToWall = new Dictionary<Vector2Int, GameObject>();
+
+            foreach(var stack in posToStack)
+            {
+                if(stack.Value is AddStack)
+                {
+                    if(stack.Value is NormalAddStack)
+                    {
+                        PrefabManager.Inst.PushToPool(stack.Value.gameObject, PrefabManager.Inst.ADDSTACK);
+                    }
+                    else if(stack.Value is CrossAddStack)
+                    {
+                        PrefabManager.Inst.PushToPool(stack.Value.gameObject, PrefabManager.Inst.CROSS_ADDSTACK);
+                    }
+                }
+                else if(stack.Value is SubtractStack)
+                {
+                    if(stack.Value is NormalSubtractStack)
+                    {
+                        PrefabManager.Inst.PushToPool(stack.Value.gameObject, PrefabManager.Inst.SUBTRACKSTACK);
+                    }
+                    else if(stack.Value is DesSubtractStack)
+                    {
+                        PrefabManager.Inst.PushToPool(stack.Value.gameObject, PrefabManager.Inst.DES_SUBTRACTSTACK);
+                    }
+                }
+            }
+            posToStack = new Dictionary<Vector2Int, AbstractStack>();
+
+            for (int i = 0; i < Bridges.Count; i++)
+            {
+                PrefabManager.Inst.PushToPool(Bridges[i], PrefabManager.Inst.BRIDGE);
+            }
+            Bridges = new List<GameObject>();
+
+            for (int i = 0; i < IsUsedAddStacks.Count; i++)
+            {
+                PrefabManager.Inst.PushToPool(IsUsedAddStacks[i], PrefabManager.Inst.ISUSED_ADDSTACK);
+            }
+            IsUsedAddStacks = new List<GameObject>();
+
+            for (int i = 0; i < IsUsedSubtractStacks.Count; i++)
+            {
+                PrefabManager.Inst.PushToPool(IsUsedSubtractStacks[i], PrefabManager.Inst.ISUSED_SUBTRACTSTACK);
+            }
+            IsUsedSubtractStacks = new List<GameObject>();
+
+            addRooms = new List<Room>();
+            subtractRooms = new List<Room>();
+
+            addStack = new List<Vector2Int>();
+            subtrackStack = new List<Vector2Int>();
+            addRoomRoads = new List<Dictionary<Vector2Int, AbstractStack>>();
+            subtractRoomRoads = new List<Dictionary<Vector2Int, AbstractStack>>();
+            isHorizontal = new List<bool>();
+    }
         public void CreateRoom(Level level)
         {
             InitRoomRoad();

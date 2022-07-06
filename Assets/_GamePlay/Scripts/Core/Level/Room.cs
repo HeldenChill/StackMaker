@@ -133,6 +133,7 @@ namespace StackMaker.Core {
                     {
                         Vector2Int pos = v.Key;
                         GameObject bridge = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.BRIDGE);
+                        level.Data.Bridges.Add(bridge);
 
                         for (int i = -ADDROOM_SIZE; i <= ADDROOM_SIZE; i++)
                         {
@@ -164,6 +165,7 @@ namespace StackMaker.Core {
                     {
                         Vector2Int pos = v.Key;
                         GameObject bridge = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.BRIDGE);
+                        level.Data.Bridges.Add(bridge);
 
                         for (int i = -ADDROOM_SIZE; i <= ADDROOM_SIZE; i++)
                         {
@@ -192,6 +194,8 @@ namespace StackMaker.Core {
                 {
                     Vector3 desDirectionAdd = new Vector3(DesStackDirection.x, 0, DesStackDirection.y);
                     GameObject obj = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.END_POSITION);
+                    level.Data.EndPos = obj;
+
                     obj.transform.localRotation = GetQuaternionFromDesDirection();
                     obj.transform.parent = level.StaticEnvironment;
                     obj.transform.localPosition = DesStack.gameObject.transform.localPosition - desDirectionAdd * 2f; 
