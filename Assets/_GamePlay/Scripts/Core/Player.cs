@@ -20,7 +20,7 @@ namespace StackMaker.Core
         [SerializeField]
         AnimationModule Anim;
         [SerializeField]
-        CheckCollide collide;
+        PlayerData Data;
         public Transform Benchmark => benchmark;
         Vector2Int moveDirection = Vector2Int.zero;   
         Vector2Int destination;
@@ -59,10 +59,14 @@ namespace StackMaker.Core
 
         //Temp Variable
         int animationState = 0;
-
+        private void Awake()
+        {
+            Data = ScriptableObject.CreateInstance("PlayerData") as PlayerData;
+        }
         void Start()
         {
             destination = new Vector2Int((int)transform.localPosition.x,(int)transform.localPosition.z);
+            SetScore(0);
         }
         private void OnEnable()
         {
@@ -126,6 +130,17 @@ namespace StackMaker.Core
             Vector2Int moveDirection = Vector2Int.zero;
             destination = Vector2Int.zero;
             directionToWin = Vector2Int.zero;
+            SetScore(0);
+        }
+        public void AddScore(int addScore)
+        {
+            Data.Score += addScore;
+            SetScore(Data.Score);
+        }
+        private void SetScore(int score)
+        {
+            Data.Score = score;
+            UIManager.Inst.SetScore(score);
         }
         private void UpdateMoveDirection()
         {

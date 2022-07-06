@@ -35,16 +35,24 @@ namespace StackMaker.Management
         {
             CurrentLevel.Initialize(levelDatas[indexLevelData]);
             UIManager.Inst.OnNextLevel += NextLevel;
+            UIManager.Inst.OnPlayAgain += PlayAgain;
         }
 
         private void OnDisable()
         {
             UIManager.Inst.OnNextLevel -= NextLevel;
+            UIManager.Inst.OnPlayAgain -= PlayAgain;
         }
 
         private void NextLevel()
         {
             indexLevelData += 1;
+            CurrentLevel.Data.Reset();
+            CurrentLevel.Initialize(levelDatas[indexLevelData]);
+        }
+
+        private void PlayAgain()
+        {
             CurrentLevel.Data.Reset();
             CurrentLevel.Initialize(levelDatas[indexLevelData]);
         }

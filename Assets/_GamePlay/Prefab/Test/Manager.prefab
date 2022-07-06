@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3945310172313306809}
   - component: {fileID: 3945310172313306814}
   - component: {fileID: 3945310172313306808}
-  - component: {fileID: 288192445}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -47,7 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevel: {fileID: 0}
   levelDatas:
-  - {fileID: 4900000, guid: 1ee13711d9aa1c24a9b25b4f2f34498d, type: 3}
+  - {fileID: 4900000, guid: 47db423099321914e9f0553d659d467a, type: 3}
+  - {fileID: 4900000, guid: dffd3a6aca8ff4240924f50872753b3c, type: 3}
   - {fileID: 4900000, guid: d9b11ceb5ab82d94c906b8110f778b7f, type: 3}
 --- !u!114 &3945310172313306808
 MonoBehaviour:
@@ -72,16 +72,3 @@ MonoBehaviour:
   bridge: {fileID: 1933373343753681, guid: 14205a6528da1894cbf0034337e8e854, type: 3}
   endPosition: {fileID: 1377060364527856, guid: bec8fbf23e70b4f42b574dddd6681a4c, type: 3}
   pool: {fileID: 5308769767703339281, guid: 1e56b0cda3c8d464ca2a871161590788, type: 3}
---- !u!114 &288192445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3945310172313306815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: feb2e232d9602794889c36ad9312f91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inGameUI: {fileID: 0}

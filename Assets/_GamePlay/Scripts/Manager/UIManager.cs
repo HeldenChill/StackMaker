@@ -9,6 +9,7 @@ namespace StackMaker.Management
     public class UIManager : MonoBehaviour
     {
         public event Action OnNextLevel;
+        public event Action OnPlayAgain;
         public static UIManager Inst = null;
 
         [SerializeField]
@@ -25,24 +26,35 @@ namespace StackMaker.Management
         private void Start()
         {
             inGameUI.OnNextLevel += NextLevel;
+            inGameUI.OnPlayAgain += PlayAgain;
             LevelManager.Inst.CurrentLevel.OnWinGame += WinGame;
         }
 
         private void OnDisable()
         {
             inGameUI.OnNextLevel -= NextLevel;
+            inGameUI.OnPlayAgain -= PlayAgain;
             LevelManager.Inst.CurrentLevel.OnWinGame -= WinGame;
         }
 
         private void NextLevel()
         {
             OnNextLevel?.Invoke();
-            inGameUI.gameObject.SetActive(false);
+            inGameUI.WinGameGUI.SetActive(false);
         }
-
+        private void PlayAgain()
+        {
+            OnPlayAgain?.Invoke();
+            inGameUI.WinGameGUI.SetActive(false);
+        }
         private void WinGame()
         {
-            inGameUI.gameObject.SetActive(true);
+            inGameUI.WinGameGUI.SetActive(true);
+        }
+
+        public void SetScore(int score)
+        {
+            inGameUI.Point.text = "SCORE: " + score;
         }
     }
 }
