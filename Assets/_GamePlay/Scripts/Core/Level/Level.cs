@@ -163,6 +163,7 @@ namespace StackMaker.Core
                     {
                         playerPosition = new Vector2Int(x, -y);
                     }
+
                     if (obj != null)
                     {
                         AbstractStack objScript = obj.gameObject.GetComponent<AbstractStack>();
@@ -172,18 +173,20 @@ namespace StackMaker.Core
                         
                         obj.transform.parent = DynamicEnvironment;
                         obj.transform.localPosition = new Vector3(x, 0, -y);
-
-                        if(x == 19 && -y == 0)
+                        if(obj.name == "Here")
+                        {
+                            Debug.Log("Use Here");
+                        }
+                        if(x == 18 && y == 9)
                         {
                             obj.name = "Here";
-                            Debug.Log(obj.transform.localPosition);
                         }
                     }
                     else
                     {
                         player.transform.localPosition = new Vector3(playerPosition.x, 0, playerPosition.y);
                     }
-
+                    
                 }
             }
             ConvertStringToMapData();
@@ -232,7 +235,7 @@ namespace StackMaker.Core
 
         private void WinGame()
         {
-            winPos.WinGame();
+            //winPos.WinGame();
             OnWinGame?.Invoke();
             //TODO: SHOW GUI
             //TODO: RESET LEVEL

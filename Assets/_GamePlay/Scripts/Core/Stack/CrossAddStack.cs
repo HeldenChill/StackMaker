@@ -56,7 +56,7 @@ namespace StackMaker.Core
             SetRotationIndicator();
         }
 
-        public void ResetStack()
+        public override void StackReset()
         {
             AddStackModel.SetActive(true);
         }

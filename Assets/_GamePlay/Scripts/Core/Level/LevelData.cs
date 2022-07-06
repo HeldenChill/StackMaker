@@ -100,6 +100,7 @@ namespace StackMaker.Core.Data
                         PrefabManager.Inst.PushToPool(stack.Value.gameObject, PrefabManager.Inst.DES_SUBTRACTSTACK);
                     }
                 }
+                stack.Value.StackReset();
             }
             posToStack = new Dictionary<Vector2Int, AbstractStack>();
 

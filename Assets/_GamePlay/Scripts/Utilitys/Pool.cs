@@ -10,16 +10,19 @@ namespace Utilitys
         [HideInInspector]
         private GameObject obj;
 
-        List<GameObject> unavailable;
-        List<GameObject> available;
+        //List<GameObject> unavailable;
+        //List<GameObject> available;
+        Queue<GameObject> objects;
+
         Quaternion initQuaternion;
         int numObj = 10;
         public void Initialize(GameObject obj,Quaternion initQuaternion = default,int numObj = 10)
         {
             this.numObj = numObj;
             this.obj = obj;
-            unavailable = new List<GameObject>();
-            available = new List<GameObject>();
+            //unavailable = new List<GameObject>();
+            //available = new List<GameObject>();
+            objects = new Queue<GameObject>();
             this.initQuaternion = initQuaternion;
             AddObject();
         }
@@ -31,13 +34,17 @@ namespace Utilitys
             {
                 GameObject obj = Instantiate(this.obj, Vector3.zero, this.initQuaternion, mainPool.transform);
                 obj.SetActive(false);
-                available.Add(obj);
+                objects.Enqueue(obj);
             }
         }
 
         public void Push(GameObject obj)
         {
-            available.Add(obj);
+            if (objects.Contains(obj))
+                return;
+
+            objects.Enqueue(obj);
+
             obj.SetActive(false);
             obj.transform.parent = mainPool.transform;
             obj.transform.position = Vector3.zero;
@@ -45,13 +52,12 @@ namespace Utilitys
 
         public GameObject Pop()
         {
-            if(available.Count <= 0)
+            if(objects.Count == 0)
             {
                 AddObject();
             }
-            GameObject returnObj = available[0];
-            unavailable.Add(returnObj);
-            available.RemoveAt(0);
+
+            GameObject returnObj = objects.Dequeue();
             returnObj.SetActive(true);
             return returnObj;
         }

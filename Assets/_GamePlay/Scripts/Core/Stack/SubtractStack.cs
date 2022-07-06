@@ -20,7 +20,7 @@ namespace StackMaker.Core
             LevelManager.Inst.CurrentLevel.Data.IsUsedSubtractStacks.Add(addStatusObj);
             AddObjectStatus(addStatusObj);
 
-            PrefabManager.Inst.PushToPool(gameObject, PrefabManager.Inst.SUBTRACKSTACK);
+            
 
             player.transform.localPosition -= new Vector3(0, Level.TileHeight, 0);
             return true;

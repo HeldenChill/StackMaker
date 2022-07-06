@@ -41,8 +41,9 @@ public class PrefabManager : MonoBehaviour
     [SerializeField]
     private GameObject endPosition;
     //-----
-    private List<string> namePools = new List<string>();
-    public List<string> NamePools => namePools;
+
+    public GameObject pool;
+    Dictionary<string, Pool> poolData = new Dictionary<string, Pool>();
     private void Awake()
     {
         if(Inst == null)
@@ -65,8 +66,7 @@ public class PrefabManager : MonoBehaviour
         
         Destroy(gameObject);
     }
-    public GameObject pool;
-    Dictionary<string, Pool> poolData = new Dictionary<string, Pool>();
+    
 
     private void Start()
     {
@@ -82,7 +82,6 @@ public class PrefabManager : MonoBehaviour
             newPool.name = namePool;
             poolScript.Initialize(obj,quaternion,numObj);
             poolData.Add(namePool, poolScript);
-            namePools.Add(namePool);
         }   
     }
 

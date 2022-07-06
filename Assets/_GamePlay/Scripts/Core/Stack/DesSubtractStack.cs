@@ -11,6 +11,7 @@ namespace StackMaker.Core
         {
             if (!base.Interact(player))
                 return false;
+            PrefabManager.Inst.PushToPool(gameObject, PrefabManager.Inst.DES_SUBTRACTSTACK);
             player.WinLevel();
             return true;
         }

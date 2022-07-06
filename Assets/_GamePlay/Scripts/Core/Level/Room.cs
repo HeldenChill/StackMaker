@@ -74,7 +74,6 @@ namespace StackMaker.Core {
                     {
                         desStackDirection = -aroundTiles[0];
                         DesStack = (DesSubtractStack)tile.Value;
-                        Debug.Log(desStackDirection);
                     }
                 }
                 else if(value == 2)
@@ -99,26 +98,25 @@ namespace StackMaker.Core {
                     {
                         Vector2Int pos = new Vector2Int(x, y);
 
-                        GameObject tallGroundBlank = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.TALLGROUNDBLANK);
-                        tallGroundBlank.transform.parent = level.StaticEnvironment;
-                        tallGroundBlank.transform.localPosition = new Vector3(pos.x, POSY_TALLGROUND, pos.y);
+                        
 
                         if (!level.Data.PosToTallGround.ContainsKey(pos))
                         {
+                            GameObject tallGroundBlank = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.TALLGROUNDBLANK);
+                            tallGroundBlank.transform.parent = level.StaticEnvironment;
+                            tallGroundBlank.transform.localPosition = new Vector3(pos.x, POSY_TALLGROUND, pos.y);
                             level.Data.PosToTallGround.Add(pos, tallGroundBlank);
                         }
 
 
                         //NOTE: Construct Wall Stack
                         if (level.Data.PosToStack.ContainsKey(pos))
-                            continue;
-
-                        GameObject wallStack = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.WALLSTACK);
-                        wallStack.transform.parent = level.StaticEnvironment;
-                        wallStack.transform.localPosition = new Vector3(pos.x, POSY_STACK, pos.y);
-
-                        if (!level.Data.PosToWall.ContainsKey(pos))
+                            continue;                       
+                        else if (!level.Data.PosToWall.ContainsKey(pos))
                         {
+                            GameObject wallStack = PrefabManager.Inst.PopFromPool(PrefabManager.Inst.WALLSTACK);
+                            wallStack.transform.parent = level.StaticEnvironment;
+                            wallStack.transform.localPosition = new Vector3(pos.x, POSY_STACK, pos.y);
                             level.Data.PosToWall.Add(pos, wallStack);
                         }
 

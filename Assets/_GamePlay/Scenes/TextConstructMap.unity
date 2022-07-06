@@ -679,11 +679,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4573252766341957642, guid: 5163f98e053537f45ac2c9ee6c27b44b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000015205705
+      value: 0.000000020423515
       objectReference: {fileID: 0}
     - target: {fileID: 4573252766341957642, guid: 5163f98e053537f45ac2c9ee6c27b44b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000007659506
+      value: -0.000000010287849
       objectReference: {fileID: 0}
     - target: {fileID: 4573252766341957642, guid: 5163f98e053537f45ac2c9ee6c27b44b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -731,11 +731,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4573252766356680787, guid: 5163f98e053537f45ac2c9ee6c27b44b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000015797939
+      value: 0.0000000033159115
       objectReference: {fileID: 0}
     - target: {fileID: 4573252766356680787, guid: 5163f98e053537f45ac2c9ee6c27b44b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000021327191
+      value: -0.0000000044764765
       objectReference: {fileID: 0}
     - target: {fileID: 4573252766867935858, guid: 5163f98e053537f45ac2c9ee6c27b44b, type: 3}
       propertyPath: m_FollowOffset.y
@@ -941,13 +941,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 205867713}
     - target: {fileID: 3945310172313306814, guid: eee1dd98272734e4eb977a1cb4fc2691, type: 3}
+      propertyPath: levelDatas.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3945310172313306814, guid: eee1dd98272734e4eb977a1cb4fc2691, type: 3}
       propertyPath: levelDatas.Array.data[0]
       value: 
-      objectReference: {fileID: 4900000, guid: 1ee13711d9aa1c24a9b25b4f2f34498d, type: 3}
+      objectReference: {fileID: 4900000, guid: 47db423099321914e9f0553d659d467a, type: 3}
     - target: {fileID: 3945310172313306814, guid: eee1dd98272734e4eb977a1cb4fc2691, type: 3}
       propertyPath: levelDatas.Array.data[1]
       value: 
-      objectReference: {fileID: 4900000, guid: 1ee13711d9aa1c24a9b25b4f2f34498d, type: 3}
+      objectReference: {fileID: 4900000, guid: dffd3a6aca8ff4240924f50872753b3c, type: 3}
+    - target: {fileID: 3945310172313306814, guid: eee1dd98272734e4eb977a1cb4fc2691, type: 3}
+      propertyPath: levelDatas.Array.data[2]
+      value: 
+      objectReference: {fileID: 4900000, guid: d9b11ceb5ab82d94c906b8110f778b7f, type: 3}
     - target: {fileID: 3945310172313306815, guid: eee1dd98272734e4eb977a1cb4fc2691, type: 3}
       propertyPath: m_Name
       value: Manager

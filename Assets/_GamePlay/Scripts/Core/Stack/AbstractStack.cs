@@ -18,7 +18,6 @@ namespace StackMaker.Core
         }
 
         private Status state = Status.Active;
-        private ModelType type = ModelType.High;
 
         public Status State { 
             get => state; 
@@ -27,15 +26,6 @@ namespace StackMaker.Core
                 state = value;
             }
         }
-        public ModelType Type
-        {
-            get => type;
-            set
-            {
-                type = value;
-            }
-        }
-
         public virtual bool Interact(Player player)
         {
             if(State == Status.Active)
@@ -48,11 +38,17 @@ namespace StackMaker.Core
                 return false;
             }
         }
+        public virtual void StackReset()
+        {
+            state = Status.Active;
+        }
 
         protected void AddObjectStatus(GameObject obj)
         {
             obj.transform.parent = gameObject.transform.parent;
             obj.transform.localPosition = gameObject.transform.localPosition;
         }
+
+        
     }
 }
