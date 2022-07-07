@@ -10,6 +10,7 @@ namespace StackMaker.Core
     public class Player : MonoBehaviour
     {
         public event Action OnPlayerReachDes;
+        private const float cameraParameter = 0.6f;
         // Start is called before the first frame update     
         [SerializeField]
         float speed = 5;
@@ -25,6 +26,7 @@ namespace StackMaker.Core
         Vector2Int moveDirection = Vector2Int.zero;   
         Vector2Int destination;
         private Stack stacks = new Stack();
+        
         
         Vector2Int SetMoveDirAndDestination
         {
@@ -85,8 +87,9 @@ namespace StackMaker.Core
         }
         public void TakeStack(AbstractStack stack)
         {
+
             stacks.Push(stack);
-            cameraLookAt.transform.localPosition -= Vector3.up * Level.TileHeight;
+            cameraLookAt.transform.localPosition -= Vector3.up * Level.TileHeight * cameraParameter;
             if(animationState != 1)
             {
                 animationState = 1;
@@ -97,7 +100,13 @@ namespace StackMaker.Core
 
         public AbstractStack ReturnStack()
         {
-            cameraLookAt.transform.localPosition += Vector3.up * Level.TileHeight;
+            if (stacks.Count <= 0)
+            {
+                moveDirection = Vector2Int.zero;
+                return null;
+            }
+
+            cameraLookAt.transform.localPosition += Vector3.up * Level.TileHeight * cameraParameter;
             return (AbstractStack)stacks.Pop();
         }
         public void RemoveAllStack()
@@ -122,6 +131,7 @@ namespace StackMaker.Core
             //TEST: Debug.Log(directionToWin);
             OnPlayerReachDes?.Invoke();
         }
+
 
         public void ResetPlayer()
         {

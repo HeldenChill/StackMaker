@@ -12,6 +12,7 @@ public class TileToStringFile : MonoBehaviour
     string pathFolder = "Assets/_GamePlay/Resources/LevelData";
     [SerializeField]
     string nameMapData = "Test.txt";
+    [SerializeField]
     private float mapWide = 10f;
     private float mapHeight = 2f;
     List<string> writeData;

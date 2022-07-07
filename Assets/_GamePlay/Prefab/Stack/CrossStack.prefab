@@ -46,8 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40b4fe54e9da90468c06cfdf72d2fb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Direction1: 0
-  Direction2: 3
   Indicator: {fileID: 1653244645669782236}
   AddStackModel: {fileID: 8337922965818026870}
 --- !u!65 &2027262003701218743
@@ -145,6 +143,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8291636281783682480}
     m_Modifications:
+    - target: {fileID: 7207612451899411378, guid: fa934a9d14f8c1348b6bf1a32926d38e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 47e6d2453a652c145b947e00c34c1be9, type: 2}
     - target: {fileID: 7340953682069613950, guid: fa934a9d14f8c1348b6bf1a32926d38e, type: 3}
       propertyPath: m_RootOrder
       value: 1
