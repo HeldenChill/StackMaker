@@ -5,7 +5,7 @@ using UnityEngine;
 namespace StackMaker.Core
 {
     using Management;
-    public class SubtractStack : AbstractStack
+    public abstract class SubtractStack : AbstractStack
     {
         public override bool Interact(Player player)
         {

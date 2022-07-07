@@ -8,18 +8,15 @@ namespace StackMaker.Core
     public class Level : MonoBehaviour
     {
         public event Action OnWinGame;
-        public enum LevelType
-        {
-            ConstructFromTile = 0,
-            ConstructFromText = 1
-        }
         [SerializeField]
         private const float tileWide = 1f;
         [SerializeField]
         private const float tileHeight = 0.25f;
+        public static float TileWide => tileWide;
+        public static float TileHeight => tileHeight;
         [SerializeField]
         private readonly Vector3 STACK_SCALE = new Vector3(1, 1, 1.5f);
-        public static float TileHeight => tileHeight;
+        
         private LevelData data;
         [SerializeField]
         private GameObject dynamicEnvironment;
@@ -27,25 +24,14 @@ namespace StackMaker.Core
         private GameObject staticEnvironment;
         [SerializeField]
         private Player player;
-        [SerializeField]
         private WinPosition winPos;
-        [SerializeField]
         TextAsset mapDataText;
         private Vector2Int playerPosition;
-
-        public LevelType Type;
-        public float mapWide = 10f;
+        
         public LayerMask stackMask;
 
-        private float mapHeight = 2f;
-        private Vector3 MapShape
-        {
-            get
-            {
-                Vector3 shape = Vector3.one * mapWide;
-                return new Vector3(shape.x, mapHeight, shape.z);
-            }
-        }
+        
+        
         public LevelData Data
         {
             get => data;
@@ -92,35 +78,12 @@ namespace StackMaker.Core
         }
         private void ConstructWorld() //NOTE: Depend on LevelData 
         {
-            if (Type == LevelType.ConstructFromTile)
-            {
-                GetStackDataFromScene();
-            }
-            else if (Type == LevelType.ConstructFromText)
-            {
-                mapData = ConvertStringToMapData();
-                LoadStackData();
-            }
+            mapData = ConvertStringToMapData();
+            LoadStackData();
             Data.CreateRoom(this);
         }       
 
-        private void GetStackDataFromScene()
-        {
-
-            Collider[] stack = Physics.OverlapBox(transform.localPosition, MapShape, Quaternion.identity, stackMask);
-            for (int i = 0; i < stack.Length; i++)
-            {
-                stack[i].transform.parent = DynamicEnvironment;
-                AbstractStack stackScript = stack[i].gameObject.GetComponent<AbstractStack>();
-                Vector2Int pos = GetPosition(stack[i].transform.localPosition);
-                if (stackScript != null)
-                {
-                    stackScript.State = AbstractStack.Status.Active;
-                    data.AddPosStackData(pos, stackScript);
-                    stack[i].transform.localPosition = new Vector3(pos.x, 0, pos.y);
-                }
-            }
-        }
+        
 
         //For Game Design
         List<List<int>> mapData;
@@ -173,14 +136,6 @@ namespace StackMaker.Core
                         
                         obj.transform.parent = DynamicEnvironment;
                         obj.transform.localPosition = new Vector3(x, 0, -y);
-                        if(obj.name == "Here")
-                        {
-                            Debug.Log("Use Here");
-                        }
-                        if(x == 18 && y == 9)
-                        {
-                            obj.name = "Here";
-                        }
                     }
                     else
                     {
@@ -241,22 +196,9 @@ namespace StackMaker.Core
             //TODO: RESET LEVEL
             //TODO: CHANGE CAMERA
         }
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawCube(transform.position, MapShape * 2);
-        }
 
-        #region Editor Function
-        public void NormalizeStackPosition()
-        {
-            Collider[] stack = Physics.OverlapBox(transform.position, Vector3.one * mapWide, Quaternion.identity, stackMask);
-            for (int i = 0; i < stack.Length; i++)
-            {
-                Vector2Int pos = GetPosition(stack[i].transform.localPosition);
-                stack[i].transform.localPosition = new Vector3(pos.x, 0, pos.y);
-            }
-        }
-        #endregion
+
+        
 
         private void OnDisable()
         {
