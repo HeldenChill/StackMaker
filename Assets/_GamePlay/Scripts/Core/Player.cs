@@ -68,6 +68,7 @@ namespace StackMaker.Core
         void Start()
         {
             destination = new Vector2Int((int)transform.localPosition.x,(int)transform.localPosition.z);
+            InputManager.Inst.InputDirection += GetPlayerInput;
             SetScore(0);
         }
         private void OnEnable()
@@ -76,10 +77,7 @@ namespace StackMaker.Core
         }
 
         // Update is called once per frame
-        void Update()
-        {
-            GetPlayerInput();
-        }
+
 
         private void FixedUpdate()
         {
@@ -116,7 +114,7 @@ namespace StackMaker.Core
                 AbstractStack stack = (AbstractStack)stacks.Pop();
                 PrefabManager.Inst.PushToPool(stack.gameObject, PrefabManager.Inst.ADDSTACK);
                 gameObject.transform.localPosition -= new Vector3(0, Level.TileHeight, 0);
-                cameraLookAt.transform.localPosition += Vector3.up * Level.TileHeight;
+                cameraLookAt.transform.localPosition += Vector3.up * Level.TileHeight * cameraParameter;
             }
         }
         public void WinLevel()
@@ -175,29 +173,12 @@ namespace StackMaker.Core
                 SetMoveDirAndDestination = moveDirection;
             }
         }
-        private void GetPlayerInput()
+        private void GetPlayerInput(Vector2Int moveDirection)
         {
-            if (moveDirection != Vector2.zero)
+            if (this.moveDirection != Vector2.zero)
                 return;
             //Test Input
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                SetMoveDirAndDestination = Vector2Int.left;
-            }
-            else if (Input.GetKeyDown(KeyCode.W))
-            {
-                SetMoveDirAndDestination = Vector2Int.up;
-
-            }
-            else if (Input.GetKeyDown(KeyCode.D))
-            {
-                SetMoveDirAndDestination = Vector2Int.right;
-
-            }
-            else if (Input.GetKeyDown(KeyCode.S))
-            {
-                SetMoveDirAndDestination = Vector2Int.down;
-            }
+            SetMoveDirAndDestination = moveDirection;
             //--
         }
 
@@ -217,8 +198,9 @@ namespace StackMaker.Core
         private void OnDisable()
         {
             Anim.UpdateEventAnimationState -= EventUpdate;
+            InputManager.Inst.InputDirection -= GetPlayerInput;
         }
 
-        
+
     }
 }

@@ -1,0 +1,155 @@
+{
+    "name": "TouchControls",
+    "maps": [
+        {
+            "name": "Touch",
+            "id": "e13c8664-998a-475a-8534-93c90a4373de",
+            "actions": [
+                {
+                    "name": "TouchInput",
+                    "type": "PassThrough",
+                    "id": "8fcc2c92-561a-46e9-a4f9-130484d1cc11",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "PrimaryContact",
+                    "type": "PassThrough",
+                    "id": "e8d6184e-999a-4b6d-bb3c-4580edc3e300",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "PrimaryPosition",
+                    "type": "PassThrough",
+                    "id": "b0209db1-a148-4f28-ab17-6f4c825876c6",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4261e998-4b14-4fc6-9233-c7c357baa8da",
+                    "path": "<Touchscreen>/primaryTouch",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "002687b5-e879-4156-994f-aa1a0381e96f",
+                    "path": "<Touchscreen>/primaryTouch/press",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrimaryContact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4ec51f40-2e18-4ceb-aede-a3a6d7ee87a7",
+                    "path": "<Touchscreen>/primaryTouch/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrimaryPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Key",
+            "id": "12a78b55-f18f-42eb-9fdf-ee35222f12dd",
+            "actions": [
+                {
+                    "name": "Up",
+                    "type": "PassThrough",
+                    "id": "9de4e0b8-d6bd-4479-b496-2ecf74c213ec",
+                    "expectedControlType": "Key",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Down",
+                    "type": "PassThrough",
+                    "id": "a7615d06-f652-437a-9ec3-3a004dc069e3",
+                    "expectedControlType": "Key",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Left",
+                    "type": "PassThrough",
+                    "id": "5ae61320-fce0-4fcd-b4f9-14a008c7df79",
+                    "expectedControlType": "Key",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Right",
+                    "type": "PassThrough",
+                    "id": "dd36c4cf-6161-4094-8cb3-f286e21062f9",
+                    "expectedControlType": "Key",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d6fb3446-cd49-4997-b92a-091c15441705",
+                    "path": "<Keyboard>/#(W)",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a6338d5a-edc2-46bb-bed1-69be08184209",
+                    "path": "<Keyboard>/#(S)",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "828d9265-a413-4d9b-8648-69dfa7bdb37f",
+                    "path": "<Keyboard>/#(A)",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6c099fd3-6d91-4a72-b601-343225bb310e",
+                    "path": "<Keyboard>/#(D)",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
