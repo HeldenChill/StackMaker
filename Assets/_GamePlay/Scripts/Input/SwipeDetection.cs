@@ -39,7 +39,6 @@ namespace Utilitys
 
         private Vector2Int DetectSwipe()
         {
-            Debug.Log(Vector3.Distance(startPosition, endPosition));
             if(Vector3.Distance(startPosition,endPosition) >= minimumDistance &&
                 (endTime - startTime) < maximumTime)
             {

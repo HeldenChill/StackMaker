@@ -58,7 +58,6 @@ namespace StackMaker.Management
             
             OnEndTouch?.Invoke(pos, time);
             Vector2Int swipeDir = swipeDetection.SwipeEnd(pos, time);
-            Debug.Log(swipeDir);
             if(swipeDir != Vector2Int.zero)
             {
                 InputDirection?.Invoke(swipeDir);
